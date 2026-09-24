@@ -1,0 +1,14 @@
+# Frontend
+Forntend/node_modules/
+Forntend/dist/
+
+# Backend
+Backend/to_do_list/target/
+
+# Environment files
+.env
+*.env
+
+# IDE
+.idea/
+.vscode/
