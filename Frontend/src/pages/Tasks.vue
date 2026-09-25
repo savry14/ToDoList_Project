@@ -1,5 +1,8 @@
 <script setup>
 import { Search } from "lucide-vue-next";
+import { ref } from "vue";
+
+const activeFilter = ref("all");
 </script>
 
 <template>
@@ -62,15 +65,41 @@ import { Search } from "lucide-vue-next";
           <div class="flex items-center gap-4">
             <div class="flex items-center rounded-lg bg-gray-200 p-1">
               <!-- All -->
-              <button class="rounded-md bg-white px-4 py-3 shadow-sm">
+              <button
+                @click="activeFilter = 'all'"
+                :class="[
+                  'rounded-md px-4 py-3 ',
+                  activeFilter === 'all'
+                    ? ' bg-white shadow-sm text-green-600'
+                    : 'text-black',
+                ]"
+              >
                 All
               </button>
 
               <!-- action -->
-              <button class="rounded-md px-4 py-3 text-gray-500">Active</button>
+              <button
+                @click="activeFilter = 'active'"
+                :class="[
+                  'rounded-md px-4 py-3 ',
+                  activeFilter === 'active'
+                    ? 'bg-white shadow-sm text-green-600'
+                    : 'text-black',
+                ]"
+              >
+                Active
+              </button>
 
               <!-- Finished -->
-              <button class="rounded-md px-4 py-3 text-gray-600">
+              <button
+                @click="activeFilter = 'completed'"
+                :class="[
+                  'rounded-md px-4 py-3',
+                  activeFilter === 'completed'
+                    ? 'bg-white shadow-sm text-green-600'
+                    :  'text-black',
+                ]"
+              >
                 Completed
               </button>
             </div>
