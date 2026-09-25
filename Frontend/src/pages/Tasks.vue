@@ -3,6 +3,8 @@ import { Search } from "lucide-vue-next";
 import { ref } from "vue";
 
 const activeFilter = ref("all");
+const isSortOpen = ref(false);
+const sortOrder = ref("newest");
 </script>
 
 <template>
@@ -43,7 +45,7 @@ const activeFilter = ref("all");
       </div>
     </section>
 
-    <section class="px-6 pt-8">
+    <section class="px-6 pt-8 pb-10">
       <div class="mx-auto max-w-7xl">
         <div
           class="w-full rounded-xl bg-white p-6 flex items-center justify-between gap-6"
@@ -68,7 +70,7 @@ const activeFilter = ref("all");
               <button
                 @click="activeFilter = 'all'"
                 :class="[
-                  'rounded-md px-4 py-3 ',
+                  'rounded-md px-4 py-2 ',
                   activeFilter === 'all'
                     ? ' bg-white shadow-sm text-green-600'
                     : 'text-black',
@@ -81,7 +83,7 @@ const activeFilter = ref("all");
               <button
                 @click="activeFilter = 'active'"
                 :class="[
-                  'rounded-md px-4 py-3 ',
+                  'rounded-md px-4 py-2 ',
                   activeFilter === 'active'
                     ? 'bg-white shadow-sm text-green-600'
                     : 'text-black',
@@ -94,20 +96,50 @@ const activeFilter = ref("all");
               <button
                 @click="activeFilter = 'completed'"
                 :class="[
-                  'rounded-md px-4 py-3',
+                  'rounded-md px-4 py-2',
                   activeFilter === 'completed'
                     ? 'bg-white shadow-sm text-green-600'
-                    :  'text-black',
+                    : 'text-black',
                 ]"
               >
                 Completed
               </button>
             </div>
-            <button
-              class="px-4 py-2 text-gray-600 rounded-lg border border-gray-200"
-            >
-              Newest First
-            </button>
+            <div class="relative">
+              <button
+                @click="isSortOpen = !isSortOpen"
+                class="w-36 px-4 py-2 text-black rounded-lg border border-gray-200 hover:border-green-600"
+              >
+                {{ sortOrder === "newest" ? "Newest First" : "Oldest First" }}
+              </button>
+
+              <div
+                v-if="isSortOpen"
+                class="absolute right-0 top-full mt-2 w-full rounded-lg border border-gray-200 bg-white shadow-md"
+              >
+                <button
+                  v-if="sortOrder === 'newest'"
+                  @click="
+                    sortOrder = 'oldest';
+                    isSortOpen = false;
+                  "
+                  class="w-full px-4 py-2 text-left text-gray-600 hover:bg-gray-100"
+                >
+                  Oldest First
+                </button>
+
+                <button
+                  v-if="sortOrder === 'oldest'"
+                  @click="
+                    sortOrder = 'newest';
+                    isSortOpen = false;
+                  "
+                  class="w-full px-4 py-2 text-left text-gray-600 bg-white hover:bg-gray-100"
+                >
+                  Newest First
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
