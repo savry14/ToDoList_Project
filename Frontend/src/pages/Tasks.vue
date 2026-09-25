@@ -1,10 +1,27 @@
 <script setup>
+import TaskLists from "../components/TaskLists.vue";
 import { Search } from "lucide-vue-next";
 import { ref } from "vue";
+
 
 const activeFilter = ref("all");
 const isSortOpen = ref(false);
 const sortOrder = ref("newest");
+
+const tasks = [
+  {
+    id: 1,
+    title: "Finish homepage UI",
+    completed: false,
+    date: "Today",
+  },
+  {
+    id: 2,
+    title: "Study JavaScript",
+    completed: true,
+    date: "Yesterday",
+  },
+];
 </script>
 
 <template>
@@ -144,5 +161,6 @@ const sortOrder = ref("newest");
         </div>
       </div>
     </section>
+    <TaskLists :tasks="tasks"/>
   </div>
 </template>
