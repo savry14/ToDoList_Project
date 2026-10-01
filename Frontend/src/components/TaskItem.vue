@@ -1,7 +1,19 @@
 <script setup>
-defineProps(["task"]);
+const props = defineProps(["task"]);
+const emit = defineEmits(["delete", "edit", "update"]);
 
-const emit = defineEmits(["delete"]);
+function formatDate(date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+function handleDelete() {
+  if (confirm("Are you sure you want to delete this task?")) {
+    emit("delete", props.task.id);
+  }
+}
 </script>
 
 <template>
@@ -14,6 +26,7 @@ const emit = defineEmits(["delete"]);
         type="checkbox"
         name=""
         id=""
+        @change="emit('update', task)"
         class="mt-0.5 h-5 w-5"
       />
       <div class="min-w-0">
@@ -25,22 +38,20 @@ const emit = defineEmits(["delete"]);
         </p>
 
         <p class="mt-1 text-xs text-gray-400">
-          {{ task.date }}
+          {{ formatDate(task.createdAt) }}
         </p>
       </div>
     </div>
     <div class="flex items-center gap-3">
-      <button  @click="emit('edit', task)"
+      <button
+        @click="emit('edit', task)"
         class="rounded-md border border-green-500 px-3 py-1.5 text-sm font-medium text-green-600 hover:bg-green-50"
       >
         Edit
       </button>
 
       <button
-        @click="
-          confirm('Are you sure you want to delete this task?') &&
-          emit('delete', task.id)
-        "
+        @click="handleDelete"
         class="rounded-md border border-red-400 px-3 py-1.5 text-sm font-medium text-red-500 hover:bg-red-50"
       >
         Delete

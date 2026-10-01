@@ -1,14 +1,17 @@
 <script setup>
 import { ref } from "vue";
 
-const emit = defineEmits(["close", "add"]);
+const emit = defineEmits(["close", "add", "edit"]);
+const props = defineProps(["task"]);
 const taskTitle = ref(props.task ? props.task.title : "");
 
 function handleAddTask() {
   if (!taskTitle.value.trim()) return;
   if (props.task) {
-    props.task.title = taskTitle.value;
-    emit("close");
+    emit("edit", {
+      id: props.task.id,
+      title: taskTitle.value,
+    });
   } else {
     emit("add", taskTitle.value);
     taskTitle.value = "";
@@ -27,7 +30,7 @@ function handleAddTask() {
       </h2>
 
       <div class="mt-6">
-        <label class="mb-2 bold text-sm font-medium text-gray-700">
+        <label class="mb-2 bold text-xl font-medium text-gray-700">
           Task title
         </label>
 
